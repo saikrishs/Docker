@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  web-service:
+    image: "web-service"
+    container_name: "web-service"
+    build: 
+      context: .
+      dockerfile: docker/phpapache/Dockerfile
+    ports:
+      - "8070:80"
+    volumes:
+      - ./public:/var/www/html
+   
+  node-service:
+    image: "node-service"
+    container_name: "node-service"
+    build: 
+      context: .
+      dockerfile: docker/nodejs/Dockerfile
+    ports:
+      - "8090:3000"
+    volumes:
+      - ./public:/var/www/html
+
+  sql-server:
+    image: "mysql:latest"
+    container_name: "mysql-server"
+    ports:
+      - "33060:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "classicmodels"
+      MYSQL_USER: "admin"
+      MYSQL_PASSWORD: "admin"
+    volumes:
+      - ./mysql_data/:/var/lib/mysql/
+
+
+   
+
+
+   
